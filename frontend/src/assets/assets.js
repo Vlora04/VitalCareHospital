@@ -175,99 +175,106 @@ export const doctors = [
         _id: 'doc7',
         name: 'Dr. Blerim Shala',
         image: doc7,
-        speciality: 'Kardiolog',
-        degree: 'Kardiologji',
+        speciality: 'Neurolog',
+        degree: 'Neurologji',
         experience: '8 vite',
-        about: 'Dr. Blerim është specialist në trajtimin e sëmundjeve të zemrës.',
+        about: 'Dr. Blerim është specialist në diagnostikimin dhe trajtimin e çrregullimeve të sistemit nervor.',
         fees: 40,
         address: {
             line1: 'Rr. Dëshmorët e Kombit, Nr. 22',
             line2: 'Prishtinë, Kosovë'
         }
     },
+
     {
         _id: 'doc8',
         name: 'Dr. Valon Dervishi',
         image: doc8,
-        speciality: 'Oftalmolog',
-        degree: 'Oftalmologji',
+        speciality: 'Gastroenterolog',
+        degree: 'Gastroenterologji',
         experience: '5 vite',
-        about: 'Dr. Valon është ekspert në trajtimin e problemeve me sytë dhe shikimin.',
+        about: 'Dr. Valon është specialist në diagnostikimin dhe trajtimin e sëmundjeve të sistemit tretës.',
         fees: 30,
         address: {
             line1: 'Rr. Bajram Curri, Nr. 10',
             line2: 'Shkup, Maqedoni'
         }
+
     },
     {
         _id: 'doc9',
         name: 'Dr. Ardiana Xhemaili',
         image: doc9,
-        speciality: 'Psikiatër',
-        degree: 'Psikiatri',
+        speciality: 'Dermatolog',
+        degree: 'Dermatologji',
         experience: '6 vite',
-        about: 'Dr. Ardiana ofron kujdes të specializuar për shëndetin mendor.',
+        about: 'Dr. Ardiana është specialiste në diagnostikimin dhe trajtimin e sëmundjeve të lëkurës, flokëve dhe thonjve.',
         fees: 40,
         address: {
             line1: 'Rr. Luan Haradinaj, Nr. 5',
             line2: 'Pejë, Kosovë'
         }
+
     },
     {
         _id: 'doc10',
         name: 'Dr. Valmir Mustafa',
         image: doc10,
-        speciality: 'Dentist',
-        degree: 'Dentisti',
+        speciality: 'Pediatër',
+        degree: 'Pediatri',
         experience: '7 vite',
-        about: 'Dr. Valmir ofron trajtime dentare dhe kujdes oral.',
+        about: 'Dr. Valmir është specialist në kujdesin dhe trajtimin e fëmijëve nga lindja deri në adoleshencë.',
         fees: 30,
         address: {
             line1: 'Rr. Bajram Curri, Nr. 16',
             line2: 'Prizren, Kosovë'
         }
+
     },
     {
         _id: 'doc11',
         name: 'Dr. Mimoza Osmani',
         image: doc11,
-        speciality: 'Ortoped',
-        degree: 'Ortopedi',
+        speciality: 'Gjinekolog',
+        degree: 'Gjinekologji',
         experience: '10 vite',
-        about: 'Dr. Mimoza është eksperte në trajtimin e lëndimeve të kockave dhe muskujve.',
+        about: 'Dr. Mimoza është specialiste në shëndetin riprodhues të grave, duke ofruar kujdes gjatë shtatzënisë dhe trajtimin e çrregullimeve gjinekologjike.',
         fees: 50,
         address: {
             line1: 'Rr. Hasan Prishtina, Nr. 8',
             line2: 'Gjakovë, Kosovë'
         }
+
     },
     {
         _id: 'doc12',
         name: 'Dr. Shkëlzen Koliqi',
         image: doc12,
-        speciality: 'Fizioterapist',
-        degree: 'Fizioterapi',
+        speciality: 'Gastroenterolog',
+        degree: 'Gastroenterologji',
         experience: '4 vite',
-        about: 'Dr. Shkëlzen ofron terapi për rehabilitimin e lëndimeve muskulore.',
+        about: 'Dr. Shkëlzen është specialist në diagnostikimin dhe trajtimin e sëmundjeve të sistemit tretës, përfshirë stomakun, mëlçinë dhe zorrët.',
         fees: 25,
         address: {
             line1: 'Rr. UÇK, Nr. 13',
             line2: 'Mitrovicë, Kosovë'
         }
+
     },
     {
         _id: 'doc13',
         name: 'Dr. Eva Dajti',
         image: doc13,
-        speciality: 'Endokrinolog',
-        degree: 'Endokrinologji',
+        speciality: 'Mjek i përgjithshëm',
+        degree: 'Mjekësi e Përgjithshme',
         experience: '9 vite',
-        about: 'Dr. Eva është eksperte në trajtimin e sëmundjeve të gjëndrës tiroide dhe diabetit.',
+        about: 'Dr. Eva ofron kujdes shëndetësor të përgjithshëm, për diagnostikimin dhe trajtimin e sëmundjeve të zakonshme për pacientë të të gjitha moshave.',
         fees: 40,
         address: {
             line1: 'Rr. Luan Haradinaj, Nr. 23',
             line2: 'Pejë, Kosovë'
         }
+
     },
     {
         _id: 'doc14',

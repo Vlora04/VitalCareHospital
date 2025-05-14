@@ -26,7 +26,7 @@ const Doctors = () => {
 
   return (
     <div>
-      <p className='text-gray-600'>Shfeto mjekët dhe specialistët. </p>
+      <p className='text-gray-600'>Shfleto mjekët dhe specialistët. </p>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
         <button className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-primary text-white' : ''}`} onClick={() => setShowFilter(prev => !prev)}>Filters</button>
         <div className={`flex-col gap-4 text-sm text-gray-600 ${showFilter ? 'flex' : 'hidden sm:flex'}`}>
@@ -75,7 +75,7 @@ const Doctors = () => {
                 <div className='p-4'>
                   <div className={`flex items-center gap-2 text-sm ${item.available ? 'text-green-500' : 'text-gray-400'}`}>
                     <p className={`w-2 h-2 ${item.available ? 'bg-green-500' : 'bg-gray-400'} rounded-full`}></p>
-                    <p>{item.available ? 'Available' : 'Not Available'}</p>
+                    <p>{item.available ? 'Disponueshëm' : 'Jo i disponueshëm'}</p>
                   </div>
 
                   <p className='text-gray-900 text-lg font-medium'>{item.name}</p>
