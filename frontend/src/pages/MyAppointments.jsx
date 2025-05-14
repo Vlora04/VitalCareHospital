@@ -9,7 +9,7 @@ const MyAppointments = () => {
   const { backendUrl, token, getDoctorsData } = useContext(AppContext)
   const navigate = useNavigate()
   const [appointments, setAppointments] = useState([]);
-  const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  const months = ["", "Jan", "Shku", "Mar", "Pri", "Maj", "Qer", "Korr", "Gush", "Shta", "Tet", "Nen", "Dhj"]
 
   const slotDateFormat = (slotDate) => {
     const dateArray = slotDate.split('_')

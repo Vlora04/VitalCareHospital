@@ -9,8 +9,8 @@ import RelatedDoctors from '../components/RelatedDoctors'
 const Appointment = () => {
 
   const { docId } = useParams()
-  const { doctors, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext)
-  const daysOfWeek = ['SUN', 'MON', 'Tue', 'WED', 'THU', 'FRI', 'SAT']
+  const { doctors, currencySymbol} = useContext(AppContext)
+  const daysOfWeek = ['DIE', 'HËN', 'MAR', 'MËR', 'ENJ', 'PRE', 'SHT']
 
   const navigate = useNavigate()
 
@@ -25,48 +25,39 @@ const Appointment = () => {
   }
 
   const getAvailableSlots = async () => {
-    setDocSlots([]);
+    setDocSlots([])
 
-    let today = new Date();
+    let today = new Date()
 
     for (let i = 0; i < 7; i++) {
-      let currentDate = new Date(today);
-      currentDate.setDate(today.getDate() + i);
+      let currentDate = new Date(today)
+      currentDate.setDate(today.getDate() + i)
 
-      let endTime = new Date(currentDate);
-      endTime.setHours(21, 0, 0, 0);
+      let endTime = new Date(/*currentDate*/)
+      endTime.setDate(today.getDate() + i)
+      endTime.setHours(21, 0, 0, 0)
 
-      if (i === 0) {
-        currentDate.setHours(today.getHours() > 10 ? today.getHours() + 1 : 10);
-        currentDate.setMinutes(today.getMinutes() > 30 ? 30 : 0);
+      if (today.getDate() === currentDate.getDate()) {
+        currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
+        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
       } else {
-        currentDate.setHours(10, 0);
+        currentDate.setHours(10)
+        currentDate.setMinutes(0)
       }
 
-      let timeSlots = [];
+      let timeSlots = []
 
       while (currentDate < endTime) {
-        const formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        let day = currentDate.getDate();
-        let month = currentDate.getMonth() + 1;
-        let year = currentDate.getFullYear();
-        const slotDate = `${day}_${month}_${year}`;
-
-        const isSlotAvailable = !(docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(formattedTime));
-
-        if (isSlotAvailable) {
+        let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           timeSlots.push({
             dateTime: new Date(currentDate),
             time: formattedTime,
           });
-        }
 
-        currentDate.setMinutes(currentDate.getMinutes() + 30);
+        currentDate.setMinutes(currentDate.getMinutes() + 30)
       }
 
-      if (timeSlots.length > 0) {
-        setDocSlots((prev) => [...prev, timeSlots]);
-      }
+        setDocSlots(prev => ([...prev, timeSlots]))
     }
   };
 
@@ -100,7 +91,7 @@ const Appointment = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }
 
 
   useEffect(() => {
@@ -134,17 +125,17 @@ const Appointment = () => {
           </div>
 
           <div>
-            <p className='flex items-center gap-1 text-sm font-medium text-gray-900 mt-3'>About <img src={assets.info_icon} alt="" /></p>
+            <p className='flex items-center gap-1 text-sm font-medium text-gray-900 mt-3'>Përshkrimi <img src={assets.info_icon} alt="" /></p>
             <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
           </div>
           <p className='text-gray-500 font-medium mt-4'>
-            Appointment fee: <span className='text-gray-600'>{currencySymbol}{docInfo.fees}</span>
+            Fatura e terminit: <span className='text-gray-600'>{docInfo.fees}{currencySymbol}</span>
           </p>
         </div>
       </div>
 
       <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
-        <p>Booking Slots</p>
+        <p>Orari i Termineve</p>
         <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
           {
             docSlots.length && docSlots.map((item, index) => (
@@ -165,7 +156,7 @@ const Appointment = () => {
             ))
           }
         </div>
-        <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6'>Book an appointment</button>
+        <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6'>Cakto terminin</button>
       </div>
       <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
 
