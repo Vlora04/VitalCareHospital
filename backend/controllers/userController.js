@@ -80,7 +80,7 @@ const loginUser = async (req, res) =>{
 //Api per marrjen e te dhenave te perdoruesit
 const getProfile = async (req,res) =>{
     try{
-        const { userId } = req.body
+        const { userId } = req
         const userData = await userModel.findById(userId).select('-password')
 
         res.json({success:true,userData})

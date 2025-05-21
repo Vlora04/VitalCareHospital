@@ -9,7 +9,7 @@ const authUser = async (req, res, next) => {
             return res.json({ success: false, message: 'Nuk jeni të autorizuar, ju lutem kyçuni përsëri!' })
         }
         const token_decode = jwt.verify(token, process.env.JWT_SECRET)
-        req.body.userId = token_decode.id
+        req.userId = token_decode.id
         next()
 
 
