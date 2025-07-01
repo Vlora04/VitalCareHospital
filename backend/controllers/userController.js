@@ -79,7 +79,7 @@ const loginUser = async (req, res) =>{
 }
 
 //Api per marrjen e te dhenave te perdoruesit
-const getProfile = async (req,res) =>{
+const getProfile = async (req,res) => {
     try{
         const { userId } = req
         const userData = await userModel.findById(userId).select('-password')
@@ -103,7 +103,7 @@ const updateProfile = async (req,res) => {
 
         }
 
-        await userModel.findByIdAndUpdate(userId, {name,phone,address:JSON.parse(address),dob,gender})
+        await userModel.findByIdAndUpdate(userId, {name, phone, address: JSON.parse(address), dob, gender})
    
         if(imageFile){
 
