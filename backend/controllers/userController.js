@@ -5,6 +5,10 @@ import jwt from 'jsonwebtoken'
 import { v2 as cloudinary } from 'cloudinary'
 
 
+
+
+
+
 //API për regjistrimin e përdoruesit
 const registerUser = async (req,res) => {
 
@@ -122,4 +126,42 @@ const updateProfile = async (req,res) => {
     }
 }
 
-export { registerUser, loginUser, getProfile, updateProfile }
+// Api per me anulu termin
+const cancelAppointment = async (req,res) => {
+    try {
+
+        const {userId, appointmentId} = req.body
+
+        const appointmentData = await appointmentModel.findById(appointmentId)
+
+        //verifikimi i userit qe e ka bo terminin
+        if (appointmentData.userId !== userId) {
+            return res.json({success:false,message:'Veprim i paautorizuar'})
+        }
+       
+        await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled:true})
+
+        //Lirimi i terminit të mjekut
+
+        const {docId, slotDate, slotTime} = appointmentData
+
+        const doctorData = await doctorModel.findById(docId)
+
+        let slots_booked = doctorData.slots_booked
+
+        slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime)
+
+        await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+
+        res.json({success:true, message:'Termini u anulua!'})
+        
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+
+
+
+export { registerUser, loginUser, getProfile, updateProfile , cancelAppointment}

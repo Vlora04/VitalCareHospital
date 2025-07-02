@@ -21,6 +21,7 @@ const MyAppointments = () => {
       const { data } = await axios.get(backendUrl + '/api/user/appointments', { headers: { utoken: token } })
       if (data.success) {
         setAppointments(data.appointments.reverse())
+        console.log(data.appointments);
       }
     } catch (error) {
       console.log(error)
@@ -30,7 +31,7 @@ const MyAppointments = () => {
 
   const cancelAppointment = async (appointmentId) => {
     try {
-      const { data } = await axios.post(backendUrl + '/api/user/cancel-appointment', { appointmentId }, { headers: { utoken: token } })
+      const { data } = await axios.post(backendUrl + '/api/user/cancel-appointment', { appointmentId }, { headers: { token } })
       if (data.success) {
         toast.success(data.message)
         getUserAppointments()
@@ -44,47 +45,9 @@ const MyAppointments = () => {
     }
   }
 
-  const initPay = (order) => {
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amount: RTCRtpSender.amount,
-      currency: order.currency,
-      name: "Appointment Payment",
-      description: "Appointment Payment",
-      order_id: order.id,
-      receipt: order.receipt,
-      handler: async (response) => {
+  
 
-        try {
-          const { data } = await axios.post(backendUrl + '/api/user/verifyRazorpay', response, { headers: { utoken: token } })
-
-          if (data.success) {
-            getUserAppointments()
-            navigate('/my-appointments')
-          }
-        } catch (error) {
-          toast.error(error.message)
-        }
-      }
-    }
-    const rzp = new window.Razorpay(options)
-    rzp.open()
-  }
-
-  const appointmentRazorpay = async (appointmentId) => {
-    try {
-      const { data } = await axios.post(backendUrl + '/api/user/payment-razorpay', { appointmentId }, { headers: { utoken: token } })
-      if (data.success) {
-        initPay(data.order)
-      } else {
-        toast.error(data.message)
-      }
-    } catch (error) {
-      console.log(error)
-      toast.error(error.message)
-    }
-  }
-
+  
   useEffect(() => {
     if (token) {
       getUserAppointments()
@@ -113,7 +76,7 @@ const MyAppointments = () => {
               </div>
               <div className='flex flex-col gap-2 justify-end'>
                 {!item.cancelled && item.payment && !item.isCompleted && <button className='sm:min-w-48 py-2 border-rounded text-stone-500 bg-indigo-50'>I Paguar</button>}
-                {!item.cancelled && !item.payment && !item.isCompleted && <button onClick={() => appointmentRazorpay(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300'>Paguaj online</button>}
+                
                 {!item.cancelled && !item.isCompleted && <button onClick={() => cancelAppointment(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-600 hover:text-white transition-all duration-300'>Anulo Terminin</button>}
                 {item.cancelled && !item.isCompleted && <button className='sm:min-w-48 py-2 border border-red-500 rounded text-red-500'>Termini është anuluar</button>}
                 {item.isCompleted && <button className='sm:min-w-48 py-2 border border-green-500 rounded text-green-500'>E përfunduar</button>}
