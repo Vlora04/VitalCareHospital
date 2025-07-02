@@ -9,7 +9,7 @@ import RelatedDoctors from '../components/RelatedDoctors'
 const Appointment = () => {
 
   const { docId } = useParams()
-  const { doctors, currencySymbol} = useContext(AppContext)
+  const { doctors, currencySymbol, backendUrl, token, getDoctorsData, userData } = useContext(AppContext)
   const daysOfWeek = ['DIE', 'HËN', 'MAR', 'MËR', 'ENJ', 'PRE', 'SHT']
 
   const navigate = useNavigate()
@@ -49,10 +49,22 @@ const Appointment = () => {
 
       while (currentDate < endTime) {
         let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          timeSlots.push({
-            dateTime: new Date(currentDate),
-            time: formattedTime,
-          });
+
+        let day = currentDate.getDate()
+        let month = currentDate.getMonth() + 1
+        let year = currentDate.getFullYear()
+
+        const slotDate = day + '_' + month + '_' + year
+        const slotTime = formattedTime
+
+        const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true
+
+          if (isSlotAvailable) {
+            timeSlots.push({
+              datetime: new Date(currentDate),
+              time: formattedTime,
+            })
+          }
 
         currentDate.setMinutes(currentDate.getMinutes() + 30)
       }
@@ -63,33 +75,31 @@ const Appointment = () => {
 
   const bookAppointment = async () => {
     if (!token) {
-      toast.warn('Login to book an appointment');
-      return navigate('/login');
+      toast.warn('Login to book an appointment')
+      return navigate('/login')
     }
 
     try {
-      const date = docSlots[slotIndex][0].dateTime;
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
+      const date = docSlots[slotIndex][0].datetime //datetime
+      let day = date.getDate()
+      let month = date.getMonth() + 1
+      let year = date.getFullYear()
 
-      const slotDate = `${day}_${month}_${year}`;
+      const slotDate = day + '_' + month + '_' + year
+      const userId = userData._id
 
-      const { data } = await axios.post(
-        `${backendUrl}/api/user/book-appointment`,
-        { docId, slotDate, slotTime },
-        { headers: { utoken: token } }
-      );
+      const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime, userId }, { headers: {token}})
 
       if (data.success) {
-        toast.success(data.message);
-        getDoctorsData();
-        navigate('/my-appointments');
+        toast.success(data.message)
+        getDoctorsData() 
+        navigate('/my-appointments')
       } else {
-        toast.error(data.message);
+        toast.error(data.message)
       }
     } catch (error) {
-      toast.error(error.message);
+      console.log(error)
+      toast.error(error.message)
     }
   }
 
@@ -140,8 +150,8 @@ const Appointment = () => {
           {
             docSlots.length && docSlots.map((item, index) => (
               <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white' : 'border border-gray-200'}`} key={index}>
-                <p>{item[0] && daysOfWeek[item[0].dateTime.getDay()]}</p>
-                <p>{item[0] && item[0].dateTime.getDate()}</p>
+                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
+                <p>{item[0] && item[0].datetime.getDate()}</p>
               </div>
             ))
           }
