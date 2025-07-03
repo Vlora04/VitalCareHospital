@@ -2,8 +2,8 @@ import express from 'express'
 import { doctorList } from '../controllers/doctorController.js'
 
 import {
-  doctorList,
-  loginDoctor,
+  // doctorList,
+  // loginDoctor,
   appointmentsDoctor,
   appointmentComplete,
   appointmentCancel,

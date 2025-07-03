@@ -1,4 +1,6 @@
 import doctorModel from "../models/doctorModel.js"
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import appointmentModel from "../models/appointmentModel.js";
 
 
@@ -35,8 +37,31 @@ const doctorList = async (req,res) => {
 
     }
         
-    
+    const loginDoctor = async (req, res) => {
+    try {
+
+        const { email, password } = req.body
+        const doctor = await doctorModel.findOne({email})
+
+        if (!doctor) {
+            return res.json({success:false, message:'Invalid credentials'})
+        }
+
+        if (isMatch) {
+
+            const token = jwt.sign({id:doctor._id}, process.env.JWT_SECRET)
+            res.json({success:true, token})
+        } else {
+            res.json({success:false, message:'Invalid credentials'})
+        }
+
+        const isMatch = await bcrypt.compare(password, doctor.password)
         
+    } catch (error) {
+        console.log(error)
+        res.json({success:false, message:error.message})
+    }
+}        
     
 }
 
@@ -72,7 +97,7 @@ const appointmentComplete = async (req, res) => {
 };
 
 // cancel appointment for doctor pannel
-const appointmentCancel = async (res, res) => {
+const appointmentCancel = async (req, res) => {
   try {
     const { docId, appointmentId } = req.body;
     const appointmentData = await appointmentModel.findById(appointmentId);
